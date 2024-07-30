@@ -13,10 +13,10 @@ class FixtureLineups extends StatelessWidget {
   Widget build(BuildContext context) {
    final fixtureLineups = Provider.of<FixtureProvider>(context);
    final screenSize = MediaQuery.of(context).size;
-   final double smallSpacing = screenSize.height * 0.02;
    final double letterSize = screenSize.height;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue.withOpacity(0.5),
         leading: IconButton(
           onPressed: () {
             context.pop();
@@ -29,15 +29,15 @@ class FixtureLineups extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: -screenSize.width * 0.175, 
-            left: -screenSize.width * 0.175, 
+            top: -screenSize.width * 0.5, 
+            left: -screenSize.width * 0.2, 
             child: CircleAvatar(
               radius: screenSize.width * 0.35,
               backgroundColor: Colors.lightBlue.withOpacity(0.5),
             ),
           ),
           Positioned(
-            top: -screenSize.width * 0.2, 
+            top: -screenSize.width * 0.6, 
             right: -screenSize.width * 0.2, 
             child: CircleAvatar(
               radius: screenSize.width * 0.4,
@@ -45,7 +45,7 @@ class FixtureLineups extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: screenSize.height * 0.9,
+            top: screenSize.height * 0.7,
             right:   screenSize.width * 0.4,
             child: CircleAvatar(
               radius: screenSize.width * 0.50,
@@ -66,7 +66,7 @@ class FixtureLineups extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 final infoLine = fixtureLineups.allLineups[index];
                 return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   child: SizedBox(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -75,7 +75,8 @@ class FixtureLineups extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(infoLine.team.name),
+                              Text(infoLine.team.name, style: TextStyle(fontSize: letterSize * 0.022, fontWeight: FontWeight.bold)),
+                              SizedBox(width:  screenSize.width * 0.05,),
                               CircleAvatar(
                                 child: FadeInImage(
                                   placeholder: AssetImage(AssetImageApp.getLoadingGif),
@@ -84,12 +85,16 @@ class FixtureLineups extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
-                          Text('COACH', style:  TextStyle(fontSize: letterSize * 0.015),),
-                          Text(infoLine.coach.name),
-                          SizedBox(height: 10),
-                          Text('STARTRIN XI', style: TextStyle(fontSize: letterSize * 0.015),),
-                          Card(
+                          SizedBox(height: screenSize.height *0.02),
+                          Text('COACH', style:  TextStyle(fontSize: letterSize * 0.020, fontWeight: FontWeight.bold)),
+                          Text(infoLine.coach.name,style: TextStyle(fontSize: letterSize * 0.018),),
+                          SizedBox(height: screenSize.height * 0.02),
+                          Text('STARTRIN XI', style: TextStyle(fontSize: letterSize * 0.020, fontWeight: FontWeight.bold)),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.cyan.shade400,
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
                             child: Column(
                               children: [
                                 ListView.builder(
@@ -99,17 +104,17 @@ class FixtureLineups extends StatelessWidget {
                                   itemBuilder: (BuildContext context, int index) {
                                     final infSub = infoLine.startXi[index];
                                     return Container(
-                                      padding: EdgeInsets.symmetric(vertical: 5),
+                                      padding: EdgeInsets.all(10),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
-                                              Text(infSub.player.number.toString()),
-                                              Text(infSub.player.name)
+                                              Text(infSub.player.number.toString(), style: TextStyle(fontSize: letterSize * 0.020, fontWeight: FontWeight.bold),),
+                                              SizedBox(width: screenSize.width * 0.03),
+                                              Text(infSub.player.name,style: TextStyle(fontSize: letterSize * 0.020),)
                                             ],
-                                          ),
-                                          
+                                          ),                                          
                                         ],
                                       ),
                                     );
@@ -118,9 +123,13 @@ class FixtureLineups extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Text('SUBSTITUTES', style: TextStyle(fontSize: letterSize * 0.015),),
-                          Card(
+                          SizedBox(height: screenSize.height * 0.02),
+                          Text('SUBSTITUTES', style: TextStyle(fontSize: letterSize * 0.022, fontWeight: FontWeight.bold)),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurple.shade400,
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
                             child: ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
@@ -128,14 +137,15 @@ class FixtureLineups extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 final infS = infoLine.substitutes[index];
                                 return Container(
-                                  padding: const  EdgeInsets.symmetric(vertical: 5),
+                                  padding: const  EdgeInsets.all(10),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
-                                          Text(infS.player.number.toString()),
-                                          Text(infS.player.name)
+                                          Text(infS.player.number.toString(),style: TextStyle(fontSize: letterSize * 0.020, fontWeight: FontWeight.bold),),
+                                          SizedBox(width: screenSize.width * 0.03),
+                                          Text(infS.player.name,style: TextStyle(fontSize: letterSize * 0.020),)
                                         ],
                                       ),
                                       

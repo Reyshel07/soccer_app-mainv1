@@ -27,38 +27,78 @@ class _LiguesScreenState extends State<LiguesScreen> {
   @override
   Widget build(BuildContext context) {
     final leaguesProvider = Provider.of<LiguesProvider>(context);
+    final screenSize = MediaQuery.of(context).size;
+    final double letterSize = screenSize.height;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ligues"),
+        backgroundColor: Colors.lightBlue.withOpacity(0.5),
+        title: Text("Ligues", style: TextStyle(fontSize: letterSize * 0.028, color: Colors.white, fontWeight: FontWeight.bold),),
         actions: [
           IconButton(
+            color:  Colors.white,
             onPressed: () {
               showSearch(
                 context: context,
                 delegate: SearchLeaguesByName(),
               );
             },
-            icon: const Icon(Icons.search),
+            icon: const Icon(color: Colors.white,Icons.search),
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: leaguesProvider.allLeagues.length,
-        itemBuilder: (BuildContext context, int index) {
-          final leagueInformation = leaguesProvider.allLeagues[index];
-          return ListTile(
-            trailing: SizedBox(
-                width: 40,
-                height: 100,
-                child: FadeInImage(
-                  placeholder: AssetImage(AssetImageApp.getLoadingGif),
-                  image: NetworkImage(leagueInformation.league.logo),
-                  fit: BoxFit.cover,
-                )),
-            title: Text(leagueInformation.league.name),
-            subtitle: Text(leagueInformation.league.type.name),
-          );
-        },
+      body: Stack(
+        children: [
+          Positioned(
+            top: -screenSize.width * 0.5, 
+            left: -screenSize.width * 0.2, 
+            child: CircleAvatar(
+              radius: screenSize.width * 0.35,
+              backgroundColor: Colors.lightBlue.withOpacity(0.5),
+            ),
+          ),
+          Positioned(
+            top: -screenSize.width * 0.6, 
+            right: -screenSize.width * 0.2, 
+            child: CircleAvatar(
+              radius: screenSize.width * 0.4,
+              backgroundColor: Colors.lightBlue.withOpacity(0.5),
+            ),
+          ),
+          Positioned(
+            top: screenSize.height * 0.7,
+            right:   screenSize.width * 0.4,
+            child: CircleAvatar(
+              radius: screenSize.width * 0.50,
+              backgroundColor: Colors.lightBlue.withOpacity(0.5),
+            ),
+          ),
+          Positioned(
+            top: screenSize.height * 0.75,
+            left:  screenSize.width * 0.5,
+            child: CircleAvatar(
+              radius: screenSize.width * 0.50,
+              backgroundColor: Colors.lightBlue.withOpacity(0.5),
+            ),
+          ),
+          ListView.builder(
+            itemCount: leaguesProvider.allLeagues.length,
+            itemBuilder: (BuildContext context, int index) {
+              final leagueInformation = leaguesProvider.allLeagues[index];
+              return ListTile(
+                trailing: SizedBox(
+                    width: 40,
+                    height: 100,
+                    child: FadeInImage(
+                      placeholder: AssetImage(AssetImageApp.getLoadingGif),
+                      image: NetworkImage(leagueInformation.league.logo),
+                      fit: BoxFit.cover,
+                    )),
+                title: Text(leagueInformation.league.name, style: TextStyle(fontSize: letterSize * 0.018),),
+                subtitle: Text(leagueInformation.league.type.name,style: TextStyle(fontSize: letterSize * 0.018))
+              );
+            },
+          ),
+        ],
       ),
     );
   }

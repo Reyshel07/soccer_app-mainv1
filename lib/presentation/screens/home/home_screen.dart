@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:soccer_app/presentation/providers/fixture/fixture_provider.dart';
+import 'package:soccer_app/presentation/screens/home/fixture_lineups.dart';
 import 'package:soccer_app/presentation/screens/home/statistics.dart';
 import 'package:soccer_app/presentation/screens/ligues/ligues_sceen.dart';
 
@@ -26,30 +27,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final responseFixt = Provider.of<FixtureProvider>(context);
     final screenSize = MediaQuery.of(context).size;
-    final double smallSpacing = screenSize.height * 0.02;
     final double letterSize = screenSize.height;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Matches"),
+        backgroundColor:Colors.lightBlue.withOpacity(0.5), 
+        title: TextButton(
+          onPressed: () { responseFixt.getAllLineups(); context.push(FixtureLineups.path);},
+          child: Text("Lineups", style:  TextStyle(fontSize: letterSize * 0.025, fontWeight: FontWeight.bold,color: Colors.white),),
+        ),
         actions: [
           TextButton(
             onPressed: () => context.push(LiguesScreen.path),
-            child: const Text("Leagues"),
+            child: Text("Leagues",style:  TextStyle(fontSize: letterSize * 0.025, fontWeight: FontWeight.bold,color: Colors.white),),
           )
         ],
       ),
       body: Stack(
         children: [
-          Positioned(
-            top: -screenSize.width * 0.175, 
-            left: -screenSize.width * 0.175, 
+           Positioned(
+            top: -screenSize.width * 0.5, 
+            left: -screenSize.width * 0.2, 
             child: CircleAvatar(
               radius: screenSize.width * 0.35,
               backgroundColor: Colors.lightBlue.withOpacity(0.5),
             ),
           ),
           Positioned(
-            top: -screenSize.width * 0.2, 
+            top: -screenSize.width * 0.6, 
             right: -screenSize.width * 0.2, 
             child: CircleAvatar(
               radius: screenSize.width * 0.4,
@@ -57,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Positioned(
-            top: screenSize.height * 0.9,
+            top: screenSize.height * 0.7,
             right:   screenSize.width * 0.4,
             child: CircleAvatar(
               radius: screenSize.width * 0.50,
@@ -82,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context.push(StatisticsScreen.path);
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.all(1),
                   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                   height: 110,
                   child: Card(
